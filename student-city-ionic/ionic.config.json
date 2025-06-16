@@ -1,0 +1,13 @@
+{
+  "name": "students_city_ionic",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite",
+  "proxies": [
+    {
+      "path": "/api",
+      "proxyUrl": "http://localhost:8000/api"
+    }
+  ]
+}

@@ -1,233 +1,119 @@
-# Students City API
+## **Students City Mobile**
 
-## Description du Projet
-Students City est une API REST développée avec Symfony 7.2 qui permet aux étudiants de partager et découvrir des lieux d'intérêt dans leur ville. L'application facilite la découverte de nouveaux endroits et permet aux utilisateurs de laisser des avis et des commentaires.
+**TP fil rouge - Évaluation Ionic + Symfony**
 
-### Fonctionnalités Principales
-- Authentification JWT pour les utilisateurs
-- Gestion des lieux
-- Système d'avis et de commentaires
-- Interface d'administration
-- Profils utilisateurs personnalisés
+* **Backend** : API REST développée avec Symfony auparavant par Bajamin Fouché
+* **Frontend** : Application mobile hybride développée avec Ionic React et Capacitor.
 
-## Installation et Configuration
+## Objectifs
 
-### Prérequis
-- PHP 8.2 ou supérieur
-- Composer
-- MySQL/MariaDB
-- Symfony CLI (recommandé)
+1. Concevoir une architecture modulaire (composants, services).
+2. Gérer l’authentification (JWT) et le statut utilisateur (validation admin).
+3. Implémenter une carte interactive avec géolocalisation et filtres.
+4. Permettre la contribution d’utilisateurs (ajout de lieux).
+5. Afficher un splash screen natif et React-level au démarrage.
 
-### Installation
+## Structure du projet
 
-1. Cloner le repository :
-```bash
-git clone "https://github.com/benj0s85/students-city-api.git"
-cd students-city-api
+```
+students-city/             # racine du projet
+│                          # API REST Symfony
+├── config/                # configurations Symfony
+├── src/                   # code source (Controllers, Entities, Services)
+├── migrations/            # migrations Doctrine
+├── public/                # dossiers publics (assets)
+├── .env                   # variables d'environnement
+├── composer.json          # dépendances PHP
+├── README.md              # instructions Backend
+│
+└── student-city-ionic/    # Ionic React + Capacitor
+    ├── public/            # icônes, index.html
+    ├── src/               # code source React (pages, components, services)
+    │   ├── components/    # Splash, Loader, etc.
+    │   ├── pages/         # Login, Home, Places, Admin...
+    │   ├── services/      # appels API, auth JWT
+    │   ├── resources/     # splash.png
+    │   ├── theme/         # variables et styles CSS
+    │   └── App.tsx        # point d'entrée, routing, splash React
+    ├── capacitor.config.ts
+    ├── package.json
+    └── README.md          # instructions Frontend
+
 ```
 
-2. Installer les dépendances :
+## Installation & démarrage
+
+### Technologies
+
+* **Node.js** et **npm**
+* **PHP** avec **Composer**
+* **Symfony CLI**
+* **Ionic CLI** & **Capacitor CLI**
+* Émulateur Android (Android Studio) ou iOS (Xcode)
+
+### 1. Installer les dépendances Backend (Symfony)
+
 ```bash
+cd backend
 composer install
 ```
 
-3. Configurer la base de données :
-- Copier le fichier `.env` en `.env.local`
-- Modifier les variables d'environnement pour la base de données :
-```
-DATABASE_URL="mysql://user:password@127.0.0.1:3306/students_city?serverVersion=8.0"
+### 3. Installer les dépendances Frontend (Ionic React)
+
+```bash
+cd ../mobile
+npm install
+
+npm install -g @ionic/cli
+
+npm install -g @capacitor/cli
 ```
 
-4. Créer la base de données et exécuter les migrations :
+### 4. Générer icônes & splash screen
+
 ```bash
+npm install --save-dev @capacitor/assets
+npx capacitor-assets generate
+```
+
+### 5. Synchroniser Capacitor
+
+```bash
+npx cap copy
+```
+
+### 6. Initialiser et migrer la base de données (Backend)
+
+```bash
+dans la racine du projet
 php bin/console doctrine:database:create
 php bin/console doctrine:migrations:migrate
 ```
 
-5. Générer les clés JWT :
+### 7. Lancer le projet
+
+# Pour lancer le projet en environnement de développement, utilise la commande suivante :
+
 ```bash
-php bin/console lexik:jwt:generate-keypair
+npm run dev
 ```
 
-6. Démarrer le serveur :
-```bash
-symfony server:start
-```
+# Cette commande exécute deux processus en parallèle :
 
-## Utilisation de l'API avec Postman
+  * `Backend Laravel` :
+    Démarre un serveur PHP local sur http://127.0.0.1:8000 à partir du dossier public/.
 
-### Configuration de l'environnement
+  * `Frontend Ionic` :
+    Lance l'application Ionic en mode développement via ionic serve, généralement accessible sur http://localhost:8100.
 
-1. Créez un nouvel environnement dans Postman avec les variables suivantes :
-   - `base_url` : http://localhost:8000
-   - `token` : (sera automatiquement rempli après la connexion)
+## Configuration
 
-### Exemples de requêtes
+* **Fichier `.env.local` (Backend)**
 
-#### Authentification
+  * `DATABASE_URL`: connexion à la BDD
+  * `JWT_SECRET_KEY`: clé secrète JWT
 
-1. **Inscription**
-   - Méthode : POST
-   - URL : {{base_url}}/api/register
-   - Headers : 
-     - Content-Type: application/json
-   - Body :
-   ```json
-   {
-       "pseudo": "example",
-       "email": "user@example.com",
-       "password": "password123"
-   }
-   ```
+* **`capacitor.config.ts` (Frontend)**
 
-2. **Connexion**
-   - Méthode : POST
-   - URL : {{base_url}}/api/login
-   - Headers : 
-     - Content-Type: application/json
-   - Body :
-   ```json
-   {
-       "email": "user@example.com",
-       "password": "password123"
-   }
-   ```
-
-#### Lieux
-
-1. **Lister tous les lieux**
-   - Méthode : GET
-   - URL : {{base_url}}/api/places
-   - Headers : 
-     - Authorization: Bearer {{token}}
-
-2. **Obtenir un lieu**
-   - Méthode : GET
-   - URL : {{base_url}}/api/places/1
-   - Headers : 
-     - Authorization: Bearer {{token}}
-
-3. **Créer un lieu**
-   - Méthode : POST
-   - URL : {{base_url}}/api/places
-   - Headers : 
-     - Authorization: Bearer {{token}}
-     - Content-Type: application/json
-   - Body :
-   ```json
-   {
-       "name": "Nom du lieu",
-       "description": "Description du lieu",
-       "address": "Adresse du lieu"
-   }
-   ```
-
-#### Avis
-
-1. **Lister tous les avis**
-   - Méthode : GET
-   - URL : {{base_url}}/api/reviews
-   - Headers : 
-     - Authorization: Bearer {{token}}
-
-2. **Obtenir un avis**
-   - Méthode : GET
-   - URL : {{base_url}}/api/reviews/1
-   - Headers : 
-     - Authorization: Bearer {{token}}
-
-3. **Ajouter un avis**
-   - Méthode : POST
-   - URL : {{base_url}}/api/reviews
-   - Headers : 
-     - Authorization: Bearer {{token}}
-     - Content-Type: application/json
-   - Body :
-   ```json
-   {
-       "place": 1,
-       "rating": 4,
-       "comment": "Excellent endroit !"
-   }
-   ```
-
-#### Profil
-
-1. **Modifier son profil**
-   - Méthode : PUT
-   - URL : {{base_url}}/api/profile
-   - Headers : 
-     - Authorization: Bearer {{token}}
-     - Content-Type: application/json
-   - Body :
-   ```json
-   {
-       "pseudo": "nouveau_pseudo",
-       "email": "nouveau@email.com"
-   }
-   ```
-
-#### Administration
-
-1. **Utilisateurs**
-   - Lister tous les utilisateurs
-     - Méthode : GET
-     - URL : {{base_url}}/api/users
-     - Headers : 
-       - Authorization: Bearer {{token}}
-
-   - Modifier un utilisateur
-     - Méthode : PUT
-     - URL : {{base_url}}/api/users/1
-     - Headers : 
-       - Authorization: Bearer {{token}}
-       - Content-Type: application/json
-     - Body :
-     ```json
-     {
-         "roles": ["ROLE_ADMIN"]
-     }
-     ```
-
-2. **Lieux**
-   - Approuver un lieu
-     - Méthode : POST
-     - URL : {{base_url}}/api/admin/places/1/approve
-     - Headers : 
-       - Authorization: Bearer {{token}}
-
-   - Rejeter un lieu
-     - Méthode : POST
-     - URL : {{base_url}}/api/admin/places/1/revoke
-     - Headers : 
-       - Authorization: Bearer {{token}}
-
-3. **Avis**
-   - Modérer un avis
-     - Méthode : PUT
-     - URL : {{base_url}}/api/admin/reviews/1
-     - Headers : 
-       - Authorization: Bearer {{token}}
-       - Content-Type: application/json
-     - Body :
-     ```json
-     {
-         "status": "approved"
-     }
-     ```
-
-### Collection Postman
-
-Pour faciliter l'utilisation de l'API, vous pouvez importer la collection Postman fournie dans le projet. Cette collection contient toutes les requêtes nécessaires pour tester l'API.
-
-1. Ouvrez Postman
-2. Cliquez sur "Import"
-3. Sélectionnez le fichier `postman_collection.json`
-4. Sélectionnez l'environnement que vous avez créé précédemment
-
-## Sécurité
-
-- L'API utilise l'authentification JWT pour sécuriser les endpoints
-- Les mots de passe sont hashés avec bcrypt
-- Les requêtes sont validées et nettoyées
-- Les CORS sont configurés pour la sécurité
+  * `appId`, `appName`,
+  * plugin `SplashScreen` (durée, couleur)

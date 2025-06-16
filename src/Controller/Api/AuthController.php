@@ -85,7 +85,7 @@ class AuthController extends AbstractController
         // Hashage du mot de passe
         $user->setPassword($hasher->hashPassword($user, $user->getPassword()));
         $user->setRoles([]);
-        $user->setStatus('en attente'); 
+        $user->setStatus('en attente');
         $user->setCreateAt(new \DateTimeImmutable());
 
         $this->entityManager->persist($user);
@@ -93,4 +93,11 @@ class AuthController extends AbstractController
 
         return new JsonResponse(['message' => 'User registered successfully'], 201);
     }
+
+    #[Route('/api/logout', name: 'api_logout', methods: ['POST'])]
+    public function logout(): JsonResponse
+    {
+        return new JsonResponse(['message' => 'Déconnecté avec succès.']);
+    }
+
 }
