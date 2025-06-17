@@ -60,7 +60,6 @@ const MapComponent: React.FC = () => {
         if (!res.ok) throw new Error('Non autorisé');
         const data: any[] = await res.json();
 
-        // Conversion et filtrage
         const parsed: Place[] = data
           .map(p => ({
             id: p.id,
@@ -102,7 +101,6 @@ const MapComponent: React.FC = () => {
         zoom={14}
         onLoad={onLoad}
       >
-        {/* Marqueur de la position utilisateur */}
         <Marker
           position={position}
           icon={{
@@ -115,7 +113,6 @@ const MapComponent: React.FC = () => {
           }}
         />
 
-        {/* Marqueurs des établissements */}
         {places.map(place => (
           <Marker
             key={place.id}
@@ -124,7 +121,6 @@ const MapComponent: React.FC = () => {
           />
         ))}
 
-        {/* InfoWindow au clic */}
         {selected && (
           <InfoWindow
             position={{ lat: selected.latitude, lng: selected.longitude }}
@@ -137,7 +133,6 @@ const MapComponent: React.FC = () => {
         )}
       </GoogleMap>
 
-      {/* Toast d’erreur */}
       <IonToast
         isOpen={error !== ''}
         message={error}

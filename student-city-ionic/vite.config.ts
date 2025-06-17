@@ -7,7 +7,6 @@ export default defineConfig({
     host: true,
     port: 8100,
     proxy: {
-      // Toute requête vers /api/* sera redirigée vers http://localhost:8000/api/*
       '/api': {
         target: 'http://localhost:8000',
         changeOrigin: true,
