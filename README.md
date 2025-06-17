@@ -92,13 +92,13 @@ php bin/console doctrine:migrations:migrate
 
 ### 7. Lancer le projet
 
-# Pour lancer le projet en environnement de développement, utilise la commande suivante :
+* Pour lancer le projet en environnement de développement, utilise la commande suivante :
 
 ```bash
 npm run dev
 ```
 
-# Cette commande exécute deux processus en parallèle :
+* Cette commande exécute deux processus en parallèle :
 
   * `Backend Laravel` :
     Démarre un serveur PHP local sur http://127.0.0.1:8000 à partir du dossier public/.
