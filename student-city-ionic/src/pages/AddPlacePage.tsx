@@ -1,7 +1,6 @@
-// src/pages/AddPlacePage.tsx
 import React, { useState } from 'react';
 import {
-  IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
+  IonPage, IonContent,
   IonItem, IonLabel, IonInput, IonButton, IonToast
 } from '@ionic/react';
 import { addPlace } from '../services/api';

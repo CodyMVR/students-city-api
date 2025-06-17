@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
+  IonPage, IonContent,
   IonList, IonItem, IonLabel, IonButton, IonSpinner, IonSearchbar
 } from '@ionic/react';
 import { fetchPlaces } from '../services/api';

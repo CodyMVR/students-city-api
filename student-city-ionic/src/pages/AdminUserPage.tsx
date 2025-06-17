@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import {
-  IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
+  IonPage, IonContent,
   IonList, IonItem, IonLabel, IonButton, IonToast, IonSpinner
 } from '@ionic/react';
 import { fetchPendingUsers, approveUser, deleteUser, UserItem } from '../services/api';

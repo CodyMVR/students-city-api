@@ -1,4 +1,3 @@
-// src/components/Splash.tsx
 import React, { useEffect } from 'react';
 import { IonSpinner } from '@ionic/react';
 import './Splash.css';

@@ -1,4 +1,3 @@
-// src/pages/Home.tsx
 import React from 'react';
 import Navbar from '../components/Navbar';
 import { IonContent, IonPage } from '@ionic/react';

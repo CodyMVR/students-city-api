@@ -1,7 +1,6 @@
-// src/pages/AdminPlacesPage.tsx
 import React, { useEffect, useState } from 'react';
 import {
-  IonPage, IonHeader, IonToolbar, IonTitle, IonContent,
+  IonPage, IonContent,
   IonList, IonItem, IonLabel, IonButton, IonToast, IonSpinner, IonListHeader
 } from '@ionic/react';
 import { fetchPendingPlaces, approvePlace, revokePlace, PlaceItem } from '../services/api';
